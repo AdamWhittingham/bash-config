@@ -1,0 +1,112 @@
+### Command Aliases ###
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias psg='ps -ef|grep '
+
+alias cucumber='bundle exec cucumber'
+alias rake='bundle exec rake'
+alias rspec='bundle exec rspec'
+
+alias gst='git status -sb'
+alias gd='git diff'
+alias gdw='git diff --word-diff'
+alias ga='git add'
+alias gc='git commit'
+alias gb='git blame -CCC'
+alias gl='git log'
+alias gls='git shortlog -sn'
+
+### Load Extra Things ###
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+### Extra Useful Functions ###
+function seconds_to_time_str {
+  local secs="$1"
+  printf "%dh %dm %ds" $((${secs}/3600)) $((${secs}%3600/60)) $((${secs}%60)) | grep -o "[1-9].*$"
+}
+
+function seconds_to_minutes {
+  local secs="$1"
+  echo "$((${secs}/60))"
+}
+
+### Set Colour Vars ###
+bold="$(tput bold)"
+red="$bold$(tput setaf 1)"
+green="$bold$(tput setaf 2)"
+yellow="$bold$(tput setaf 3)"
+blue="$bold$(tput setaf 4)"
+purple="$bold$(tput setaf 5)"
+white="$bold$(tput setaf 7)"
+reset="$bold$(tput sgr0)"
+
+### Prompt Colour Functions ###
+function user_colour {
+  if [[ $(id -u) == 0 ]]; then
+  echo $red
+  else echo $green
+  fi
+}
+
+function colour_for_minutes {
+  minutes="$1"
+  if [[ $minutes -gt 30 ]]; then colour=$red
+  elif [[ $minutes -gt 10 ]]; then colour=$yellow
+  else colour=$blue
+  fi
+  echo $colour
+}
+
+### Git Prompt Niceness ###
+function git_working_changed {
+  git diff --quiet 2> /dev/null
+  if [[ $? == 0 ]]; then return 1; else return 0; fi
+}
+
+function git_staging_changed {
+  git diff --cached --quiet 2> /dev/null
+  if [[ $? == 0 ]]; then return 1; else return 0; fi
+}
+
+function git_changed {
+  $(git_working_changed) || $(git_staging_changed)
+}
+
+function git_branch {
+  echo $(__git_ps1 "%s")
+}
+
+function git_seconds_since_commit {
+  now=`date +%s`
+  local last_commit=`git log --pretty=format:'%at' -1`
+  local seconds=$((now-last_commit))
+  echo $seconds
+}
+
+function git_mins_since_commit {
+  echo "$(seconds_to_minutes $(git_seconds_since_commit))"
+}
+
+function git_branch_colour {
+  local colour=$green
+  if $(git_changed) ; then
+    local minutes_since_commit="$(git_mins_since_commit)"
+    colour="$(colour_for_minutes $minutes_since_commit)"
+  fi
+  echo $colour
+}
+
+git_prompt() {
+  local g="$(__gitdir)"
+  if [ -n "$g" ]; then
+    local branch="$(git_branch)"
+    local branch_colour="$(git_branch_colour)"
+    ## A much more verbose look at when the branch was last commited!
+    #echo "(${branch_colour}$(seconds_to_time_str $(git_seconds_since_commit))${reset}|${branch})"
+    echo "${branch_colour}(${branch})${reset}"
+ fi
+}
+
+### Setup Prompt ###
+export PS1='\[$reset$(user_colour)\]${debian_chroot:+($debian_chroot)}\u\[$reset\]@\[$yellow\]\h\[$reset\]:\[$purple\]\W\[$reset\]$(git_prompt)$PS2'
