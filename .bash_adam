@@ -3,11 +3,16 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias psg='ps -ef|grep '
+alias sagi='sudo apt-get install'
+alias sagr='sudo apt-get remove'
 
+# Ruby Aliases #
 alias cucumber='bundle exec cucumber'
+alias guard='bundle exec guard'
 alias rake='bundle exec rake'
 alias rspec='bundle exec rspec'
 
+# Git aliases #
 alias gst='git status -sb'
 alias gd='git diff'
 alias gdw='git diff --word-diff'
