@@ -22,6 +22,11 @@ alias gb='git blame -CCC'
 alias gl='git log'
 alias gls='git shortlog -sn'
 
+# tmux aliases #
+alias tls='tmux ls'
+alias tn='tmux new -s'
+alias ta='tmux attach -t'
+
 ### Load Extra Things ###
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
