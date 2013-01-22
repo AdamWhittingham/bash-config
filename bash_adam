@@ -2,7 +2,7 @@
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias psg='ps -ef|grep '
+alias psg='psf|grep '
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
 
@@ -43,14 +43,14 @@ function seconds_to_minutes {
 
 ### Set Colour Vars ###
 bold="$(tput bold)"
-red="\[$bold$(tput setaf 1)\]"
-green="\[$bold$(tput setaf 2)\]"
-yellow="\[$bold$(tput setaf 3)\]"
-blue="\[$bold$(tput setaf 4)\]"
-purple="\[$bold$(tput setaf 5)\]"
-cyan="\[$bold$(tput setaf 6)\]"
-white="\[$bold$(tput setaf 7)\]"
-reset="\[$(tput sgr0)\]"
+red="\001$bold$(tput setaf 1)\002"
+green="\001$bold$(tput setaf 2)\002"
+yellow="\001$bold$(tput setaf 3)\002"
+blue="\001$bold$(tput setaf 4)\002"
+purple="\001$bold$(tput setaf 5)\002"
+cyan="\001$bold$(tput setaf 6)\002"
+white="\001$bold$(tput setaf 7)\002"
+reset="\001$(tput sgr0)\002"
 
 ### Prompt Colour Functions ###
 function user_colour {
@@ -58,16 +58,16 @@ function user_colour {
   if [[ $(id -u) == 0 ]]; then
     colour=$red
   fi
-  echo -e $colour
+  echo $colour
 }
 
 function colour_for_minutes {
   minutes="$1"
-  if [[ $minutes -gt 30 ]]; then colour=$red
+  if [[ $minutes -gt 30 ]]; then echo $red
     elif [[ $minutes -gt 10 ]]; then colour=$yellow
     else colour=$blue
   fi
-  echo -e $colour
+  echo -e "$colour"
 }
 
 ### Git Prompt Niceness ###
@@ -97,30 +97,23 @@ function git_seconds_since_commit {
 }
 
 function git_mins_since_commit {
-  echo -e "$(seconds_to_minutes $(git_seconds_since_commit))"
+  echo "$(seconds_to_minutes $(git_seconds_since_commit))"
 }
 
 function git_branch_colour {
-  local colour="$green"
+  local colour=$green
   if $(git_changed) ; then
     local minutes_since_commit="$(git_mins_since_commit)"
-    colour="$(colour_for_minutes $minutes_since_commit)"
+    colour=$(colour_for_minutes $minutes_since_commit)
   fi
   echo -e "$colour"
 }
 
 git_prompt() {
   if [ -n "$(__gitdir)" ]; then
-    local branch="$(git_branch)"
-    local branch_colour="$(git_branch_colour)"
-    # Evaluating this each time the prompt is printed shows the non-printing marker characters \[ and \].
-    # Need to work this out and fix it so that the line wrapping issues don't come back but it also uses
-    # the branch colour again.
-    #
-    #echo -e "${branch_colour}(${branch})"
-    echo -e "(${branch})"
- fi
+    echo "$(git_branch_colour)($(git_branch))"
+  fi
 }
 
 ### Setup Prompt ###
-export PS1="$(user_colour)\u$reset@$yellow\h$reset:$purple\W$reset$blue\$(git_prompt)$reset-$PS2"
+export PS1="$(user_colour)\u$reset@$yellow\h$reset:$purple\W$reset\$(git_prompt)$reset-$PS2"
