@@ -5,6 +5,8 @@ alias l='ls -CF'
 alias psg='psf|grep '
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
+alias sau='sudo apt-get update'
+alias saup='sudo apt-get upgrade'
 
 # Ruby Aliases #
 alias cucumber='bundle exec cucumber'
