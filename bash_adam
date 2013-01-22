@@ -62,10 +62,10 @@ function user_colour {
 }
 
 function colour_for_minutes {
-  minutes="$1"
-  if [[ $minutes -gt 30 ]]; then echo $red
+  local minutes="$1"
+  local colour=$green
+  if [[ $minutes -gt 30 ]]; then colour=$red
     elif [[ $minutes -gt 10 ]]; then colour=$yellow
-    else colour=$blue
   fi
   echo -e "$colour"
 }
@@ -86,7 +86,7 @@ function git_changed {
 }
 
 function git_branch {
-  echo $(__git_ps1 "%s")
+  echo "$(__git_ps1 "%s")"
 }
 
 function git_seconds_since_commit {
@@ -101,17 +101,17 @@ function git_mins_since_commit {
 }
 
 function git_branch_colour {
-  local colour=$green
+  local colour=$blue
   if $(git_changed) ; then
     local minutes_since_commit="$(git_mins_since_commit)"
     colour=$(colour_for_minutes $minutes_since_commit)
   fi
-  echo -e "$colour"
+  echo -e $colour
 }
 
 git_prompt() {
   if [ -n "$(__gitdir)" ]; then
-    echo "$(git_branch_colour)($(git_branch))"
+    echo -e "$(git_branch_colour)($(git_branch))"
   fi
 }
 
