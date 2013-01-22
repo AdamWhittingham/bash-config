@@ -25,9 +25,13 @@ alias gl='git log'
 alias gls='git shortlog -sn'
 
 # tmux aliases #
+alias tmux='tmux -2' #launch tmux in 256 colours; better than overriding TERM
 alias tls='tmux ls'
 alias tn='tmux new -s'
 alias ta='tmux attach -t'
+
+# Random useful commands #
+alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
 
 ### Load Extra Things ###
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
