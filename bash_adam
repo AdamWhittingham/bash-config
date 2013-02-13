@@ -26,9 +26,17 @@ alias gls='git shortlog -sn'
 
 # tmux aliases #
 alias tmux='tmux -2' #launch tmux in 256 colours; better than overriding TERM
-alias tls='tmux ls'
-alias tn='tmux new -s'
-alias ta='tmux attach -t'
+alias tl='tmux ls'
+alias tls='tl'
+alias tm='tmux_create_or_attach'
+
+function tmux_create_or_attach(){
+  session="$1"
+  if [[ ! $(tmux has-session -t "$session" &>/dev/null) ]] ; then
+    tmux new -s "$session" -d
+  fi
+  tmux attach -t "$session"
+}
 
 # Random useful commands #
 alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
