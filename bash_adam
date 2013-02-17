@@ -21,7 +21,7 @@ alias gdw='git diff --word-diff'
 alias ga='git add'
 alias gc='git commit'
 alias gb='git blame -CCC'
-alias gl='git log'
+alias gl='git_pretty_log'
 alias gls='git shortlog -sn'
 
 # tmux aliases #
@@ -127,6 +127,23 @@ git_prompt() {
   if [ -n "$(__gitdir)" ]; then
     echo -e "$(git_branch_colour)($(git_branch))"
   fi
+}
+
+### Git Log niceness ###
+_I_=$'\c_'
+HASH="%C(green)%h%C(reset)"
+AGE="%C(yellow)%ar%C(reset)"
+AUTHOR="%C(bold blue)%an%C(reset)"
+REFS="%C(bold red)%d%C(reset)"
+COMMENT="%s"
+
+FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
+
+git_pretty_log() {
+  git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
+  sed -e 's/days ago/d/g' -e 's/weeks ago/w/g' -e 's/months ago/m/g' |
+  column -s "$_I_" -t |
+  less -FXRS
 }
 
 ### Setup Prompt ###
