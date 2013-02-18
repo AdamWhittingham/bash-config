@@ -141,7 +141,7 @@ FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
 
 git_pretty_log() {
   git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
-  sed -e 's/days ago/d/g' -e 's/weeks ago/w/g' -e 's/months ago/m/g' |
+  sed -e 's/hours ago/h/g' -e 's/days ago/d/g' -e 's/weeks ago/w/g' -e 's/months ago/m/g' |
   column -s "$_I_" -t |
   less -FXRS
 }
