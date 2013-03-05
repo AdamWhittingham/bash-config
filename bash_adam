@@ -24,6 +24,9 @@ alias gb='git blame -CCC'
 alias gl='git_pretty_log'
 alias gls='git shortlog -sn'
 
+# Naughty, but lets sneak in configuring 'git meld'
+git config --global alias.meld !~/.bash-config/git-meld.pl
+
 # tmux aliases #
 alias tmux='tmux -2' #launch tmux in 256 colours; better than overriding TERM
 alias tl='tmux ls'
@@ -141,7 +144,7 @@ FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
 
 git_pretty_log() {
   git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
-  sed -e 's/(econds\|inutes\|ours\|ays\|eeks\|onths\|ears) ago//g' |
+  sed -e 's/days ago/d/g' -e 's/weeks ago/w/g' -e 's/months ago/m/g' |
   column -s "$_I_" -t |
   less -FXRS
 }
