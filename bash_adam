@@ -1,7 +1,7 @@
 ### Command Aliases ###
-alias ll='ls -alF'
-alias la='ls -A'
 alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
 alias psg='psf|grep '
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
@@ -15,14 +15,15 @@ alias rake='bundle exec rake'
 alias rspec='bundle exec rspec'
 
 # Git aliases #
-alias gst='git status -sb'
+alias ga='git add'
+alias gaa='git add -A'
+alias gb='git blame -CCC'
+alias gc='git commit'
 alias gd='git diff'
 alias gdw='git diff --word-diff'
-alias ga='git add'
-alias gc='git commit'
-alias gb='git blame -CCC'
 alias gl='git_pretty_log'
 alias gls='git shortlog -sn'
+alias gst='git status -sb'
 
 # Naughty, but lets sneak in configuring 'git meld'
 git config --global alias.meld !~/.bash-config/git-meld.pl
@@ -59,14 +60,15 @@ function seconds_to_minutes {
 }
 
 ### Set Colour Vars ###
-bold="$(tput bold)"
-red="\001$bold$(tput setaf 1)\002"
-green="\001$bold$(tput setaf 2)\002"
-yellow="\001$bold$(tput setaf 3)\002"
 blue="\001$bold$(tput setaf 4)\002"
-purple="\001$bold$(tput setaf 5)\002"
 cyan="\001$bold$(tput setaf 6)\002"
+green="\001$bold$(tput setaf 2)\002"
+purple="\001$bold$(tput setaf 5)\002"
+red="\001$bold$(tput setaf 1)\002"
 white="\001$bold$(tput setaf 7)\002"
+yellow="\001$bold$(tput setaf 3)\002"
+
+bold="$(tput bold)"
 reset="\001$(tput sgr0)\002"
 
 ### Prompt Colour Functions ###
