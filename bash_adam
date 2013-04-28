@@ -2,6 +2,7 @@
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
+alias lh='ls -alFh'
 alias psg='psf|grep '
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
@@ -60,6 +61,9 @@ function seconds_to_minutes {
 }
 
 ### Set Colour Vars ###
+bold="$(tput bold)"
+reset="\001$(tput sgr0)\002"
+
 blue="\001$bold$(tput setaf 4)\002"
 cyan="\001$bold$(tput setaf 6)\002"
 green="\001$bold$(tput setaf 2)\002"
@@ -67,9 +71,6 @@ purple="\001$bold$(tput setaf 5)\002"
 red="\001$bold$(tput setaf 1)\002"
 white="\001$bold$(tput setaf 7)\002"
 yellow="\001$bold$(tput setaf 3)\002"
-
-bold="$(tput bold)"
-reset="\001$(tput sgr0)\002"
 
 ### Prompt Colour Functions ###
 function user_colour {
