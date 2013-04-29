@@ -8,12 +8,13 @@ alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
 alias sau='sudo apt-get update'
 alias saup='sudo apt-get upgrade'
+alias sshp='ssh -o"PreferredAuthentications=password"'
 
 # Ruby Aliases #
-alias cucumber='bundle exec cucumber'
+alias cucumber='bundle exec cucumber --color'
 alias guard='bundle exec guard'
 alias rake='bundle exec rake'
-alias rspec='bundle exec rspec'
+alias rspec='bundle exec rspec --color'
 
 # Git aliases #
 alias ga='git add'
@@ -147,7 +148,8 @@ FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
 
 git_pretty_log() {
   git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
-  sed -e 's/days ago/d/g' -e 's/weeks ago/w/g' -e 's/months ago/m/g' |
+  sed -e 's/{econd\|inute\|our\|ay\|eek\|onth\|ear}[,\s]//g' -e 's/s\? ago//g' |
+
   column -s "$_I_" -t |
   less -FXRS
 }
