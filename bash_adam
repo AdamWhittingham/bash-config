@@ -31,7 +31,7 @@ alias gst='git status -sb'
 git config --global alias.meld !~/.bash-config/git-meld.pl
 
 # tmux aliases #
-alias tmux='tmux -2' #launch tmux in 256 colours; better than overriding TERM
+alias tmux='tmux -2' #launch tmux in 256 colours
 alias tl='tmux ls'
 alias tls='tl'
 alias tm='tmux_create_or_attach'
@@ -153,6 +153,8 @@ git_pretty_log() {
   column -s "$_I_" -t |
   less -FXRS
 }
+
+export TERM=xterm-256color
 
 ### Setup Prompt ###
 export PS2="-> "
