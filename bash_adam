@@ -27,6 +27,9 @@ alias gl='git_pretty_log'
 alias gls='git shortlog -sn'
 alias gst='git status -sb'
 
+# Dev aliases #
+alias prp='git pull && rake && git push'
+
 # Naughty, but lets sneak in configuring 'git meld'
 git config --global alias.meld !~/.bash-config/git-meld.pl
 
