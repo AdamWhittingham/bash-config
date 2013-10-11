@@ -1,16 +1,21 @@
 ### Command Aliases ###
+alias psg='psf|grep '
+alias sshp='ssh -o"PreferredAuthentications=password"'
+alias ack='ack-grep'
+
+# ls aliases #
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias lh='ls -alFh'
-alias psg='psf|grep '
+
+# Package management aliases #
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
 alias sau='sudo apt-get update'
 alias saup='sudo apt-get upgrade'
-alias sshp='ssh -o"PreferredAuthentications=password"'
 
-# Ruby Aliases #
+# Ruby aliases #
 alias cucumber='bundle exec cucumber --color'
 alias guard='bundle exec guard'
 alias rake='bundle exec rake'
