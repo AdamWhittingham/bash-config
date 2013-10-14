@@ -94,7 +94,7 @@ function colour_for_minutes {
   local minutes="$1"
   local colour=$green
   if [[ $minutes -gt 30 ]]; then colour=$red
-    elif [[ $minutes -gt 10 ]]; then colour=$yellow
+    elif [[ $minutes -gt 15 ]]; then colour=$yellow
   fi
   echo -e "$colour"
 }
