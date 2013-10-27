@@ -29,6 +29,9 @@ alias gc='git commit'
 alias gd='git diff'
 alias gdw='git diff --word-diff'
 alias gl='git_pretty_log'
+
+#git log --pretty=format:"%C(auto,blue)%h%C(auto,reset) - %C(auto,green)%an%C(auto,reset), %C(auto,yellow)%ar%C(auto,reset) : %s"
+alias gld='git log -p'
 alias gls='git shortlog -sn'
 alias gst='git status -sb'
 
@@ -38,10 +41,20 @@ alias prp='git pull && rake && git push'
 # tmux aliases #
 alias tmux='tmux -2' #launch tmux in 256 colours
 alias tl='tmux ls'
-alias tls='tl'
+alias tls='tmux ls'
 alias tm='tmux_create_or_attach'
 alias tma='tmux_new_attach_to_session'
 
+# Random useful commands #
+alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
+
+### Load Extra Things ###
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Naughty, but lets sneak in configuring 'git meld'
+git config --global alias.meld !~/.bash-config/git-meld.pl
+
+### Tmux Functions ###
 function tmux_create_or_attach(){
   session="$1"
   if [[ ! $(tmux has-session -t "$session" &>/dev/null) ]] ; then
@@ -59,15 +72,6 @@ function tmux_new_attach_to_session(){
   done
   tmux new-session -s "${session}_${counter}" -t "${session}"
 }
-
-# Random useful commands #
-alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
-
-### Load Extra Things ###
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-# Naughty, but lets sneak in configuring 'git meld'
-git config --global alias.meld !~/.bash-config/git-meld.pl
 
 ### Extra Useful Functions ###
 function seconds_to_time_str {
@@ -167,8 +171,13 @@ FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
 
 git_pretty_log() {
   git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
-  sed -e 's/{econd\|inute\|our\|ay\|eek\|onth\|ear}[,\s]//g' -e 's/s\? ago//g' |
-
+  sed -e 's/ second[,s] ago/s/' \
+      -e 's/ minute[,s] ago/M/' \
+      -e 's/ hour[,s] ago/h/' \
+      -e 's/ day[,s] ago/d/' \
+      -e 's/ week[,s] ago/w/' \
+      -e 's/ month[,s] ago/m/' \
+      -e 's/ year[,s] ago/y/' |
   column -s "$_I_" -t |
   less -FXRS
 }
