@@ -35,14 +35,12 @@ alias gst='git status -sb'
 # Dev aliases #
 alias prp='git pull && rake && git push'
 
-# Naughty, but lets sneak in configuring 'git meld'
-git config --global alias.meld !~/.bash-config/git-meld.pl
-
 # tmux aliases #
 alias tmux='tmux -2' #launch tmux in 256 colours
 alias tl='tmux ls'
 alias tls='tl'
 alias tm='tmux_create_or_attach'
+alias tma='tmux_new_attach_to_session'
 
 function tmux_create_or_attach(){
   session="$1"
@@ -52,11 +50,24 @@ function tmux_create_or_attach(){
   tmux attach -t "$session"
 }
 
+function tmux_new_attach_to_session(){
+  session="$1"
+  counter=0
+  while (tmux has-session -t "${session}_${counter}") ; do
+    counter=$[$counter +1]
+    echo $counter
+  done
+  tmux new-session -s "${session}_${counter}" -t "${session}"
+}
+
 # Random useful commands #
 alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
 
 ### Load Extra Things ###
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Naughty, but lets sneak in configuring 'git meld'
+git config --global alias.meld !~/.bash-config/git-meld.pl
 
 ### Extra Useful Functions ###
 function seconds_to_time_str {
