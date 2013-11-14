@@ -51,8 +51,17 @@ alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "sta
 ### Load Extra Things ###
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-# Naughty, but lets sneak in configuring 'git meld'
+### Config all those annoying things you usually forget for a while ###
+# Setup git
 git config --global alias.meld !~/.bash-config/git-meld.pl
+git config --global branch.autosetuprebase always
+git config --global color.ui auto
+git config --global push.default current
+
+# Setup Proxy if set in profile.d
+if [[ -f /etc/profile.d/proxy ]] ; then
+  source /etc/profile.d/proxy
+fi
 
 ### Tmux Functions ###
 function tmux_create_or_attach(){
