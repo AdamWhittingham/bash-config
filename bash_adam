@@ -63,6 +63,10 @@ if [[ -f /etc/profile.d/proxy ]] ; then
   source /etc/profile.d/proxy
 fi
 
+
+alias p='source /etc/profile.d/proxy'
+alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
+
 ### Tmux Functions ###
 function tmux_create_or_attach(){
   session="$1"
