@@ -52,6 +52,12 @@ alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 # Random useful commands #
 alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
 
+### Super lazy-time update functions
+alias up-vim='git-update ~/.vim'
+alias up-bash='git-update ~/.bash-config'
+alias up-tmux='git-update ~/.tmux-config'
+alias up-all='up-vim && up-bash && up-tmux'
+
 ### Bind extra keys ###
 # Bind UpArrow and DownArrow to search to autocomplete the current command
 bind '"\e[A": history-search-backward'
@@ -96,6 +102,15 @@ function tmux_new_attach_to_session(){
 }
 
 ### Extra Useful Functions ###
+function git-update {
+  local updir=$1
+  echo "git pull (in $updir)"
+  if pushd $updir >/dev/null ; then
+    git pull
+    popd >/dev/null
+  fi
+}
+
 function seconds_to_time_str {
   local secs="$1"
   printf "%dh %dm %ds" $((${secs}/3600)) $((${secs}%3600/60)) $((${secs}%60)) | grep -o "[1-9].*$"
