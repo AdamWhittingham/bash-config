@@ -45,14 +45,27 @@ alias tls='tmux ls'
 alias tm='tmux_create_or_attach'
 alias tma='tmux_new_attach_to_session'
 
+# Proxy aliases
+alias p='source /etc/profile.d/proxy'
+alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
+
 # Random useful commands #
 alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
+
+### Bind extra keys ###
+# Bind UpArrow and DownArrow to search to autocomplete the current command
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+# Bind PgUp and PgDown to scoll through history
+bind '"\e[5~": previous-history'
+bind '"\e[6~": next-history'
 
 ### Load Extra Things ###
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-### Config all those annoying things you usually forget for a while ###
-# Setup git
+### Configure extra things
+# Extra Git config
 git config --global alias.meld !~/.bash-config/git-meld.pl
 git config --global branch.autosetuprebase always
 git config --global color.ui auto
@@ -62,10 +75,6 @@ git config --global push.default current
 if [[ -f /etc/profile.d/proxy ]] ; then
   source /etc/profile.d/proxy
 fi
-
-
-alias p='source /etc/profile.d/proxy'
-alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 
 ### Tmux Functions ###
 function tmux_create_or_attach(){
