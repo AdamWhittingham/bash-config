@@ -12,6 +12,7 @@ alias lh='ls -alFh'
 # Package management aliases #
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
+alias saar='sudo apt-get autoremove'
 alias sau='sudo apt-get update'
 alias saup='sudo apt-get upgrade'
 
