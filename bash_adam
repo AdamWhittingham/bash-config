@@ -27,6 +27,7 @@ alias ga='git add'
 alias gaa='git add -A'
 alias gb='git blame -CCC'
 alias gc='git commit'
+alias gcaa='git commit -a --amend -CHEAD'
 alias gd='git diff'
 alias gdw='git diff --word-diff'
 alias gl='git_pretty_log'
@@ -70,6 +71,7 @@ bind '"\e[6~": next-history'
 
 ### Load Extra Things ###
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -s "$HOME/.bash-config/git-prompt.sh" ]] && source "$HOME/.bash-config/git-prompt.sh"
 
 ### Configure extra things
 # Extra Git config
