@@ -86,7 +86,10 @@ if [[ -f /etc/profile.d/proxy ]] ; then
   source /etc/profile.d/proxy
 fi
 
-### Tmux Functions ###
+# Setup iTerm2 tab names
+export PROMPT_COMMAND='echo -ne "\\033]0;$(basename ${PWD/#$HOME/~})\\007"'
+
+### #Tmux Functions ###
 function tmux_create_or_attach(){
   session="$1"
   if [[ ! $(tmux has-session -t "$session" &>/dev/null) ]] ; then
