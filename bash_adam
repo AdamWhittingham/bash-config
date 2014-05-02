@@ -1,5 +1,5 @@
 ### Command Aliases ###
-alias psg='psf|grep '
+alias psg='ps -ef|grep '
 alias sshp='ssh -o"PreferredAuthentications=password"'
 alias ack='ack-grep'
 
@@ -9,7 +9,7 @@ alias la='ls -A'
 alias ll='ls -alF'
 alias lh='ls -alFh'
 
-# Package management aliases #
+# apt-get aliases #
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
 alias saar='sudo apt-get autoremove'
@@ -23,6 +23,7 @@ alias rake='bundle exec rake'
 alias rspec='bundle exec rspec --color'
 
 # Git aliases #
+alias g='git'
 alias ga='git add'
 alias gaa='git add -A'
 alias gb='git blame -CCC'
@@ -30,7 +31,8 @@ alias gc='git commit'
 alias gcaa='git commit -a --amend -CHEAD'
 alias gd='git diff'
 alias gdw='git diff --word-diff'
-alias gl='git_pretty_log'
+alias gcl='git clean -fd'
+alias gco='git checkout'
 
 #git log --pretty=format:"%C(auto,blue)%h%C(auto,reset) - %C(auto,green)%an%C(auto,reset), %C(auto,yellow)%ar%C(auto,reset) : %s"
 alias gld='git log -p'
@@ -51,9 +53,6 @@ alias tma='tmux_new_attach_to_session'
 # Proxy aliases
 alias p='source /etc/profile.d/proxy'
 alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
-
-# Random useful commands #
-alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1| grep -P "state|to\ full|percentage"'
 
 ### Super lazy-time update functions
 alias up-vim='git-update ~/.vim'
@@ -205,29 +204,6 @@ git_prompt() {
   if [ -n "$(__gitdir)" ]; then
     echo -e "$(git_branch_colour)($(git_branch))"
   fi
-}
-
-### Git Log niceness ###
-_I_=$'\c_'
-HASH="%C(green)%h%C(reset)"
-AGE="%C(yellow)%ar%C(reset)"
-AUTHOR="%C(bold blue)%an%C(reset)"
-REFS="%C(bold red)%d%C(reset)"
-COMMENT="%s"
-
-FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
-
-git_pretty_log() {
-  git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
-  sed -e 's/ second[,s] ago/s/' \
-      -e 's/ minute[,s] ago/M/' \
-      -e 's/ hour[,s] ago/h/' \
-      -e 's/ day[,s] ago/d/' \
-      -e 's/ week[,s] ago/w/' \
-      -e 's/ month[,s] ago/m/' \
-      -e 's/ year[,s] ago/y/' |
-  column -s "$_I_" -t |
-  less -FXRS
 }
 
 export TERM=xterm-256color
