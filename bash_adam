@@ -34,7 +34,7 @@ alias gdw='git diff --word-diff'
 alias gcl='git clean -fd'
 alias gco='git checkout'
 
-#git log --pretty=format:"%C(auto,blue)%h%C(auto,reset) - %C(auto,green)%an%C(auto,reset), %C(auto,yellow)%ar%C(auto,reset) : %s"
+alias gl='git log --pretty=format:"%C(auto,blue)%h%C(auto,reset) - %C(auto,green)%an%C(auto,reset), %C(auto,yellow)%ar%C(auto,reset) : %s"'
 alias gld='git log -p'
 alias gls='git shortlog -sn'
 alias gst='git status -sb'
