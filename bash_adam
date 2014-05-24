@@ -34,7 +34,7 @@ alias gdw='git diff --word-diff'
 alias gcl='git clean -fd'
 alias gco='git checkout'
 
-alias gl='git log --pretty=format:"%C(auto,blue)%h%C(auto,reset) - %C(auto,green)%an%C(auto,reset), %C(auto,yellow)%ar%C(auto,reset) : %s"'
+alias gl='git_pretty_log'
 alias gld='git log -p'
 alias gls='git shortlog -sn'
 alias gst='git status -sb'
@@ -206,6 +206,23 @@ git_prompt() {
   fi
 }
 
+### Git Log Niceness ###
+
+_I_=' '
+HASH="%C(green)%h%C(reset)"
+AGE="%C(yellow)%ar%C(reset)"
+AUTHOR="%C(bold blue)%an%C(reset)"
+REFS="%C(bold red)%d%C(reset)"
+COMMENT="%s"
+
+FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
+
+git_pretty_log() {
+  git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
+  less -FXRS
+}
+
+#
 export TERM=xterm-256color
 
 ### Get CLI file colors back in OS X ###
