@@ -1,28 +1,28 @@
-### Command Aliases ###
+# Command Aliases
 alias psg='ps -ef|grep '
 alias sshp='ssh -o"PreferredAuthentications=password"'
 alias ack='ack-grep'
 
-# ls aliases #
+## ls aliases
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias lh='ls -alFh'
 
-# apt-get aliases #
+## apt-get aliases
 alias sai='sudo apt-get install'
 alias sar='sudo apt-get remove'
 alias saar='sudo apt-get autoremove'
 alias sau='sudo apt-get update'
 alias saup='sudo apt-get upgrade'
 
-# Ruby aliases #
+## Ruby aliases
 alias cucumber='bundle exec cucumber --color'
 alias guard='bundle exec guard'
 alias rake='bundle exec rake'
 alias rspec='bundle exec rspec --color'
 
-# Git aliases #
+## Git aliases
 alias g='git'
 alias ga='git add'
 alias gaa='git add -A'
@@ -39,44 +39,44 @@ alias gld='git log -p'
 alias gls='git shortlog -sn'
 alias gst='git status -sb'
 
-# Dev aliases #
+## Dev aliases
 alias prp='git pull && rake && git push'
 alias filecomp='file_composition'
 
-# tmux aliases #
+## tmux aliases
 alias tmux='tmux -2' #launch tmux in 256 colours
 alias tl='tmux ls'
 alias tls='tmux ls'
 alias tm='tmux_create_or_attach'
 alias tma='tmux_new_attach_to_session'
 
-# Proxy aliases
+## Proxy aliases
 alias p='source /etc/profile.d/proxy'
 alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 
-### Super lazy-time update functions
+## Super lazy-time update functions
 alias up-vim='git-update ~/.vim'
 alias up-bash='git-update ~/.bash-config'
 alias up-tmux='git-update ~/.tmux-config'
 alias up-all='up-vim && up-bash && up-tmux'
 
-### Bind extra keys ###
-# Bind UpArrow and DownArrow to search to autocomplete the current command
+# Bind extra keys
+## Bind UpArrow and DownArrow to search to autocomplete the current command
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
-# Bind PgUp and PgDown to scoll through history
+## Bind PgUp and PgDown to scoll through history
 bind '"\e[5~": previous-history'
 bind '"\e[6~": next-history'
 
-### Configure extra things
-# Extra Git config
+# Configure extra things
+## Extra Git config
 git config --global alias.meld !~/.bash-config/git-meld.pl
 git config --global branch.autosetuprebase always
 git config --global color.ui auto
 git config --global push.default current
 
-### #Tmux Functions ###
+#Tmux Functions
 function tmux_create_or_attach(){
   session="$1"
   if [[ ! $(tmux has-session -t "$session" &>/dev/null) ]] ; then
@@ -95,7 +95,7 @@ function tmux_new_attach_to_session(){
   tmux new-session -s "${session}_${counter}" -t "${session}"
 }
 
-### Extra Useful Functions ###
+# Extra Useful Functions
 function file_composition {
   find . -type f | perl -n -e'/(\.\w+$)/ && print "$1\n"' | sort | uniq -c | sort -n
 }
@@ -124,7 +124,7 @@ function seconds_to_minutes {
   echo "$((${secs}/60))"
 }
 
-### Set Colour Vars ###
+# Colour Vars
 bold="$(tput bold)"
 reset="\001$(tput sgr0)\002"
 
@@ -136,7 +136,7 @@ red="\001$bold$(tput setaf 1)\002"
 white="\001$bold$(tput setaf 7)\002"
 yellow="\001$bold$(tput setaf 3)\002"
 
-### Prompt Colour Functions ###
+# Prompt Colour Functions
 function user_colour {
   local colour=$green
   if [[ $(id -u) == 0 ]]; then
@@ -154,7 +154,7 @@ function colour_for_minutes {
   echo -e "$colour"
 }
 
-### Git Prompt Niceness ###
+# Git Prompt Niceness
 function git_working_changed {
   git diff --quiet 2> /dev/null
   if [[ $? == 0 ]]; then return 1; else return 0; fi
@@ -199,7 +199,7 @@ git_prompt() {
   fi
 }
 
-### Git Log Niceness ###
+# Git Log Niceness
 _I_=' '
 HASH="%C(green)%h%C(reset)"
 AGE="%C(yellow)%ar%C(reset)"
@@ -214,27 +214,27 @@ git_pretty_log() {
   less -FXRS
 }
 
-### Load Extra Things ###
+# Load Extra Things
 source_if_present "$HOME/.rvm/scripts/rvm"
 source_if_present "$HOME/.bash-config/git-completion.sh"
 source_if_present "$HOME/.bash-config/git-prompt.sh"
 
-# Setup Proxy if set in profile.d
+## Setup Proxy if set in profile.d
 source_if_present "/etc/profile.d/proxy"
 
 # Setup iTerm2 tab names
 export PROMPT_COMMAND='echo -ne "\\033]0;$(basename ${PWD/#$HOME/~})\\007"'
 
-### Git 'g' alias auto-completion fixes
+# Git 'g' alias auto-completion fixes
 bashdefault -o default -o nospace -F _git g 2>/dev/null || complete -o default -o nospace -F _git g
 __git_complete g __git_main
 
 # Force term type to stop all the stupidity in vim, tmux et. al. Not a good idea but fixes too many things not to do it for now.
 export TERM=xterm-256color
 
-### Get CLI file colors back in OS X ###
+# Get CLI file colors back in OS X
 export CLICOLOR=1
 
-### Setup Prompt ###
+# Setup Prompt
 export PS2="-> "
 export PS1="$(user_colour)\u$reset@$yellow\h$reset:$purple\W$reset\$(git_prompt)$reset$PS2"
