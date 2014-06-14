@@ -69,24 +69,12 @@ bind '"\e[B": history-search-forward'
 bind '"\e[5~": previous-history'
 bind '"\e[6~": next-history'
 
-### Load Extra Things ###
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-[[ -s "$HOME/.bash-config/git-prompt.sh" ]] && source "$HOME/.bash-config/git-prompt.sh"
-
 ### Configure extra things
 # Extra Git config
 git config --global alias.meld !~/.bash-config/git-meld.pl
 git config --global branch.autosetuprebase always
 git config --global color.ui auto
 git config --global push.default current
-
-# Setup Proxy if set in profile.d
-if [[ -f /etc/profile.d/proxy ]] ; then
-  source /etc/profile.d/proxy
-fi
-
-# Setup iTerm2 tab names
-export PROMPT_COMMAND='echo -ne "\\033]0;$(basename ${PWD/#$HOME/~})\\007"'
 
 ### #Tmux Functions ###
 function tmux_create_or_attach(){
@@ -110,6 +98,11 @@ function tmux_new_attach_to_session(){
 ### Extra Useful Functions ###
 function file_composition {
   find . -type f | perl -n -e'/(\.\w+$)/ && print "$1\n"' | sort | uniq -c | sort -n
+}
+
+function source_if_present(){
+  local file="$1"
+  [[ -f $file ]] && source "$file"
 }
 
 function git-update {
@@ -220,6 +213,17 @@ git_pretty_log() {
   git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
   less -FXRS
 }
+
+### Load Extra Things ###
+source_if_present "$HOME/.rvm/scripts/rvm"
+source_if_present "$HOME/.bash-config/git-completion.sh"
+source_if_present "$HOME/.bash-config/git-prompt.sh"
+
+# Setup Proxy if set in profile.d
+source_if_present "/etc/profile.d/proxy"
+
+# Setup iTerm2 tab names
+export PROMPT_COMMAND='echo -ne "\\033]0;$(basename ${PWD/#$HOME/~})\\007"'
 
 ### Git 'g' alias auto-completion fixes
 bashdefault -o default -o nospace -F _git g 2>/dev/null || complete -o default -o nospace -F _git g

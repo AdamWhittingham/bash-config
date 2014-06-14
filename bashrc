@@ -7,4 +7,3 @@ function source_if_present(){
 
 source_if_present ~/.bash-config/bash_adam
 source_if_present /usr/local/opt/android-sdk
-source_if_present /usr/local/etc/bash_completion.d/git-completion.bash
