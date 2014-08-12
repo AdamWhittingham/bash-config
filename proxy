@@ -1,0 +1,43 @@
+#! /bin/sh
+
+if [[ ! -f /etc/profile.d/proxy ]]; then
+  echo 'FAILED: /etc/profile.d/proxy does not exist.'
+  echo 'Create the file and ensure is exports http_proxy'
+  echo "For example, run the following command, replacing 'my_proxy:8080' with your proxy:"
+  echo "echo 'export http_proxy=my_proxy:8080' >/etc/profile.d/proxy"
+  exit 1
+fi
+
+source /etc/profile.d/proxy
+proxy=$http_proxy
+
+if [[ "$1" == "on" ]]; then
+	echo "Setting proxies to $proxy"
+
+	export http_proxy=$proxy
+	export https_proxy=$proxy
+
+	git config --global http.proxy $proxy                                         &>/dev/null
+	git config --global https.proxy $proxy                                        &>/dev/null
+
+	npm config set proxy $proxy                                                   &>/dev/null
+	npm config set https-proxy $proxy                                             &>/dev/null
+
+	sed -i.bak 's|"proxy": ""|"proxy": "'"$proxy"'"|g' $HOME/.bowerrc             &>/dev/null
+	sed -i.bak 's|"https-proxy": ""|"https-proxy": "'"$proxy"'"|g' $HOME/.bowerrc &>/dev/null
+
+else
+	echo "Disabling proxies"
+
+	export http_proxy=
+	export https_proxy=
+
+	git config --global --unset http.proxy                                        &>/dev/null
+	git config --global --unset https.proxy                                       &>/dev/null
+
+	npm config rm proxy                                                           &>/dev/null
+	npm config rm https-proxy                                                     &>/dev/null
+
+	sed -i.bak 's|"proxy": "'"$proxy"'"|"proxy": ""|g' $HOME/.bowerrc             &>/dev/null
+	sed -i.bak 's|"https-proxy": "'"$proxy"'"|"https-proxy": ""|g' $HOME/.bowerrc &>/dev/null
+fi
