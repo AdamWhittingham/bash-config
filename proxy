@@ -16,6 +16,8 @@ if [[ "$1" == "on" ]]; then
 
 	export http_proxy=$proxy
 	export https_proxy=$proxy
+	export HTTP_PROXY=$proxy
+	export HTTPS_PROXY=$proxy
 
 	git config --global http.proxy $proxy                                         &>/dev/null
 	git config --global https.proxy $proxy                                        &>/dev/null
@@ -31,6 +33,8 @@ else
 
 	export http_proxy=
 	export https_proxy=
+	export HTTP_PROXY=
+	export HTTPS_PROXY=
 
 	git config --global --unset http.proxy                                        &>/dev/null
 	git config --global --unset https.proxy                                       &>/dev/null
