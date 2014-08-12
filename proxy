@@ -31,10 +31,10 @@ if [[ "$1" == "on" ]]; then
 else
 	echo "Disabling proxies"
 
-	export http_proxy=
-	export https_proxy=
-	export HTTP_PROXY=
-	export HTTPS_PROXY=
+	unset http_proxy
+	unset https_proxy
+	unset HTTP_PROXY
+	unset HTTPS_PROXY
 
 	git config --global --unset http.proxy                                        &>/dev/null
 	git config --global --unset https.proxy                                       &>/dev/null
