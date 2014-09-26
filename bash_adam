@@ -238,3 +238,8 @@ export CLICOLOR=1
 # Setup Prompt
 export PS2="-> "
 export PS1="$(user_colour)\u$reset@$yellow\h$reset:$purple\W$reset\$(git_prompt)$reset$PS2"
+
+function check_shellshock(){
+  env X="() { :;} ; echo You are vulnerable to shellshock! Update bash!!" `which bash` -c ''
+}
+

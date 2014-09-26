@@ -14,3 +14,12 @@ cat >>~/.bashrc <<EOS
   fi
 EOS
 ```
+
+Check for shellshock vulnurability
+-----------------------------------
+
+To check if you are vulnerable to the shellshock bug in bash run:
+
+```
+check_shellshock
+```
