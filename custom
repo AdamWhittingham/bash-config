@@ -3,13 +3,9 @@ function source_if_present(){
   [[ -f $file ]] && source "$file"
 }
 
-function set_config_base(){
-  pushd $(dirname $0) > /dev/null
-  CONFIG_BASE="$(pwd)"
-  popd > /dev/null
-}
-
-set_config_base
+pushd "$(dirname $0)" > /dev/null
+CONFIG_BASE="$(pwd)"
+popd > /dev/null
 
 # Load Customisations for all shells
 source_if_present "$CONFIG_BASE/path"
@@ -24,16 +20,6 @@ elif [[ -n $ZSH_NAME ]] ; then
 fi
 
 source_if_present "$HOME/.rvm/scripts/rvm"
-source_if_present "/etc/profile.d/proxy"
-
-# Bind extra keys
-## Bind UpArrow and DownArrow to search to autocomplete the current command
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
-
-## Bind PgUp and PgDown to scoll through history
-bind '"\e[5~": previous-history'
-bind '"\e[6~": next-history'
 
 # Configure extra things
 git config --global color.ui auto
@@ -54,10 +40,6 @@ export PROMPT_COMMAND='echo -ne "\\033]0;$(basename ${PWD/#$HOME/~})\\007"'
 
 # Add rbenv loading if needed
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# Git 'g' alias auto-completion fixes
-bashdefault -o default -o nospace -F _git g 2>/dev/null || complete -o default -o nospace -F _git g
-__git_complete g __git_main
 
 # Force term type to stop all the stupidity in vim, tmux et. al. Not a good idea but fixes too many things not to do it for now.
 export TERM=xterm-256color
