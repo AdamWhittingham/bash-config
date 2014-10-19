@@ -19,8 +19,6 @@ elif [[ -n $ZSH_NAME ]] ; then
   source_if_present "$CONFIG_BASE/zsh/custom"
 fi
 
-source_if_present "$HOME/.rvm/scripts/rvm"
-
 # Configure extra things
 git config --global color.ui auto
 
