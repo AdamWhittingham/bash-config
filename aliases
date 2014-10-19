@@ -53,14 +53,14 @@ alias tm='tmux_create_or_attach'
 alias tma='tmux_new_attach_to_session'
 
 ## Proxy aliases
-alias p='source $HOME/.bash-config/proxy on'
-alias np='source $HOME/.bash-config/proxy off'
+alias p='source $HOME/.adshell/proxy on'
+alias np='source $HOME/.adshell/proxy off'
 
 ## Super lazy-time update functions
 alias up-vim='git-update $HOME/.vim'
-alias up-bash='git-update $HOME/.bash-config'
+alias up-shell='git-update $HOME/.adshell'
 alias up-tmux='git-update $HOME/.tmux-config'
-alias up-all='up-vim && up-bash && up-tmux'
+alias up-all='up-vim && up-shell && up-tmux'
 
 # Misc Aliases
 alias v='vagrant'
