@@ -38,6 +38,17 @@ bind '"\e[6~": next-history'
 # Configure extra things
 git config --global color.ui auto
 
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  if [[ $(uname) == 'Darwin' ]]; then
+   export EDITOR='mvim'
+  else
+   export EDITOR='gvim'
+  fi
+fi
+
 # Setup iTerm2 tab names
 export PROMPT_COMMAND='echo -ne "\\033]0;$(basename ${PWD/#$HOME/~})\\007"'
 
