@@ -41,3 +41,19 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Force term type to stop all the stupidity in vim, tmux et. al. Not a good idea but fixes too many things not to do it for now.
 export TERM=xterm-256color
+
+# Git Log Niceness
+_I_=' '
+HASH="%C(green)%h%C(reset)"
+AGE="%C(yellow)%ar%C(reset)"
+AUTHOR="%C(bold blue)%an%C(reset)"
+REFS="%C(bold red)%d%C(reset)"
+COMMENT="%s"
+
+FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
+
+git_pretty_log() {
+  git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
+  less -FXRS
+}
+
