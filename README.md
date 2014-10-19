@@ -9,10 +9,5 @@ Installation
 ```
 git clone https://github.com/AdamWhittingham/bash-config .adshell
 
-cat >>~/.profile <<EOS
-adshell="$HOME/.adshell/custom"
-if [[ -f $adshell ]]; then
-  source $adshell
-fi
-EOS
+~/.adshell/install
 ```
