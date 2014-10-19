@@ -1,0 +1,99 @@
+source_if_present "$CONFIG_BASE/bash/git-completion"
+source_if_present "$CONFIG_BASE/bash/git-prompt"
+
+# Colour Vars
+bold="$(tput bold)"
+reset="\001$(tput sgr0)\002"
+
+blue="\001$bold$(tput setaf 4)\002"
+cyan="\001$bold$(tput setaf 6)\002"
+green="\001$bold$(tput setaf 2)\002"
+purple="\001$bold$(tput setaf 5)\002"
+red="\001$bold$(tput setaf 1)\002"
+white="\001$bold$(tput setaf 7)\002"
+yellow="\001$bold$(tput setaf 3)\002"
+
+# Prompt Colour Functions
+function user_colour {
+  local colour=$green
+  if [[ $(id -u) == 0 ]]; then
+    colour=$red
+  fi
+  echo $colour
+}
+
+function colour_for_minutes {
+  local minutes="$1"
+  local colour=$green
+  if [[ $minutes -gt 30 ]]; then colour=$red
+    elif [[ $minutes -gt 15 ]]; then colour=$yellow
+  fi
+  echo -e "$colour"
+}
+
+# Git Prompt Niceness
+function git_working_changed {
+  git diff --quiet 2> /dev/null
+  if [[ $? == 0 ]]; then return 1; else return 0; fi
+}
+
+function git_staging_changed {
+  git diff --cached --quiet 2> /dev/null
+  if [[ $? == 0 ]]; then return 1; else return 0; fi
+}
+
+function git_changed {
+  $(git_working_changed) || $(git_staging_changed)
+}
+
+function git_branch {
+  echo "$(__git_ps1 "%s")"
+}
+
+function git_seconds_since_commit {
+  now=`date +%s`
+  local last_commit=`git log --pretty=format:'%at' -1`
+  local seconds=$((now-last_commit))
+  echo $seconds
+}
+
+function git_mins_since_commit {
+  echo "$(seconds_to_minutes $(git_seconds_since_commit))"
+}
+
+function git_branch_colour {
+  local colour=$blue
+  if $(git_changed) ; then
+    local minutes_since_commit="$(git_mins_since_commit)"
+    colour=$(colour_for_minutes $minutes_since_commit)
+  fi
+  echo -e $colour
+}
+
+git_prompt() {
+  if [ -n "$(__gitdir)" ]; then
+    echo -e "$(git_branch_colour)($(git_branch))"
+  fi
+}
+
+# Git Log Niceness
+_I_=' '
+HASH="%C(green)%h%C(reset)"
+AGE="%C(yellow)%ar%C(reset)"
+AUTHOR="%C(bold blue)%an%C(reset)"
+REFS="%C(bold red)%d%C(reset)"
+COMMENT="%s"
+
+FORMAT="$HASH$_I_$AGE$_I_$AUTHOR$_I_$REFS $COMMENT"
+
+git_pretty_log() {
+  git log --graph --decorate --pretty="tformat:${FORMAT}" $* |
+  less -FXRS
+}
+
+# Get CLI file colors back in OS X
+export CLICOLOR=1
+
+# Setup Prompt
+export PS2="-> "
+export PS1="$(user_colour)\u$reset@$yellow\h$reset:$purple\W$reset\$(git_prompt)$reset$PS2"

@@ -1,0 +1,67 @@
+# Place any alias commands in here
+## Try to keep them available to all shells
+
+# Command Aliases
+alias psg='ps -ef|grep '
+alias sshp='ssh -o"PreferredAuthentications=password"'
+alias ack='ack-grep'
+
+## ls aliases
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias lh='ls -alFh'
+
+## apt-get aliases
+alias sai='sudo apt-get install'
+alias sar='sudo apt-get remove'
+alias saar='sudo apt-get autoremove'
+alias sau='sudo apt-get update'
+alias saup='sudo apt-get upgrade'
+
+## Ruby aliases
+alias cucumber='bundle exec cucumber --color'
+alias guard='bundle exec guard'
+alias rake='bundle exec rake'
+alias rspec='bundle exec rspec --color'
+
+## Git aliases
+alias g='git'
+alias ga='git add'
+alias gaa='git add -A'
+alias gb='git blame -CCC'
+alias gc='git commit'
+alias gcaa='git commit -a --amend -CHEAD'
+alias gd='git diff'
+alias gdw='git diff --word-diff'
+alias gcl='git clean -fd'
+alias gco='git checkout'
+alias gl='git_pretty_log'
+alias gld='git log -p'
+alias gls='git shortlog -sn'
+alias gst='git status -sb'
+
+## Dev aliases
+alias prp='git pull && rake && git push'
+alias filecomp='file_composition'
+
+## tmux aliases
+alias tmux='tmux -2' #launch tmux in 256 colours
+alias tl='tmux ls'
+alias tls='tmux ls'
+alias tm='tmux_create_or_attach'
+alias tma='tmux_new_attach_to_session'
+
+## Proxy aliases
+alias p='source $HOME/.bash-config/proxy on'
+alias np='source $HOME/.bash-config/proxy off'
+
+## Super lazy-time update functions
+alias up-vim='git-update $HOME/.vim'
+alias up-bash='git-update $HOME/.bash-config'
+alias up-tmux='git-update $HOME/.tmux-config'
+alias up-all='up-vim && up-bash && up-tmux'
+
+# Misc Aliases
+alias v='vagrant'
+
