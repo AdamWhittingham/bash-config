@@ -27,9 +27,9 @@ if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
   if [[ $(uname) == 'Darwin' ]]; then
-   export EDITOR='mvim'
+   export EDITOR='mvim -f'
   else
-   export EDITOR='gvim'
+   export EDITOR='gvim -f'
   fi
 fi
 
