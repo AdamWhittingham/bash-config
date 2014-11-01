@@ -16,6 +16,4 @@ main(){
   append_to_file "$source_cmd" $HOME/.zshrc
 }
 
-# Run main().
-# This is wrapped to avoid the concerns about disconnects before the whole script is curled.
 main
