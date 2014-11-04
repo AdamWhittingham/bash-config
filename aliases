@@ -24,6 +24,7 @@ alias cucumber='bundle exec cucumber --color'
 alias guard='bundle exec guard'
 alias rake='bundle exec rake'
 alias rspec='bundle exec rspec --color'
+alias serve='ruby -run -e httpd . -p 9090'
 
 ## Git aliases
 alias g='git'
