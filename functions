@@ -1,7 +1,8 @@
 #Tmux Functions
 function tmux_create_or_attach(){
   session="$1"
-  if [[ ! $(tmux has-session -t "$session" &>/dev/null) ]] ; then
+  if [[ ! $(tmux has-session -t "$session" &>/dev/null) ]]
+  then
     tmux new -s "$session" -d
   fi
   tmux attach -t "$session"
