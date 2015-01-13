@@ -5,7 +5,7 @@ if [[ ! -f /etc/profile.d/proxy ]]; then
   echo 'Create the file and ensure is exports http_proxy'
   echo "For example, run the following command, replacing 'my_proxy:8080' with your proxy:"
   echo "echo 'export http_proxy=my_proxy:8080' >/etc/profile.d/proxy"
-  exit 1
+  return 1
 fi
 
 source /etc/profile.d/proxy
