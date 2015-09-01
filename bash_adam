@@ -38,6 +38,11 @@ alias gl='git_pretty_log'
 alias gld='git log -p'
 alias gls='git shortlog -sn'
 alias gst='git status -sb'
+alias gmg=gitMerge
+
+gitMerge() {
+  git merge --no-ff $1 && rake && git push && git push origin :$1 && git branch -D $1
+}
 
 ## Dev aliases
 alias prp='git pull && rake && git push'
